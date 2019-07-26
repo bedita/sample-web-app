@@ -1,0 +1,73 @@
+{
+    "name": "bedita/be4-webapp",
+    "description": "Sample BE4 Web App",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1",
+        "bedita/web-tools": "^1.0",
+        "bedita/i18n": "^1.4",
+        "cakephp/plugin-installer": "^1.0",
+        "wikimedia/composer-merge-plugin": "^1.4"
+    },
+    "require-dev": {
+        "cakephp/cakephp-codesniffer": "^3.0",
+        "phpunit/phpunit": "^5|^6",
+        "psy/psysh": "@stable"
+    },
+    "suggest": {
+        "markstory/asset_compress": "An asset compression plugin which provides file concatenation and a flexible filter system for preprocessing and minification.",
+        "dereuromark/cakephp-ide-helper": "After baking your code, this keeps your annotations in sync with the code evolving from there on for maximum IDE and PHPStan compatibility."
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Test\\": "tests/",
+            "Cake\\Test\\": "vendor/cakephp/cakephp/tests/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": "App\\Console\\Installer::postInstall",
+        "post-create-project-cmd": "App\\Console\\Installer::postInstall",
+        "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump",
+        "check": [
+            "@test",
+            "@cs-check"
+        ],
+        "cs-setup": [
+            "vendor/bin/phpcs --config-set installed_paths vendor/cakephp/cakephp-codesniffer",
+            "vendor/bin/phpcs --config-set default_standard CakePHP",
+            "vendor/bin/phpcs --config-set colors 1"
+        ],
+        "cs-check": "vendor/bin/phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests ./config",
+        "cs-fix": "vendor/bin/phpcbf --colors --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests ./config",
+        "test": "vendor/bin/phpunit --colors=always",
+        "update-dev": [
+            "@composer update",
+            "@cs-setup"
+        ]
+    },
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "merge-plugin": {
+            "include": [
+                "composer.local.json",
+                "plugins/*/*/composer.json",
+                "plugins/*/composer.json"
+            ],
+            "recurse": true,
+            "replace": true,
+            "merge-dev": true,
+            "merge-extra": false,
+            "merge-extra-deep": false,
+            "merge-scripts": false
+        }
+    }
+}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="{{ I18n.getLang() }}">
+<head>
+    {{ Html.charset()|raw }}
+    {% element 'head' %}
+    <body>
+
+    {% element 'header' %}
+
+    {{ _view.fetch('content')|raw }}
+
+    {% element 'footer' %}
+    {# {% element 'cookie-banner' %} #}
+
+    </body>
+</html>
